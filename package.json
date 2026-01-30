@@ -1,0 +1,44 @@
+{
+  "name": "dun_diary_backend",
+  "version": "1.0.0",
+  "description": "Backend side for Dun Diary Application",
+  "main": "src/app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon --exec ts-node src/app.ts",
+    "build": "tsc",
+    "start": "node src/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NutNaphop/Dun-Diary-Application-backend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/NutNaphop/Dun-Diary-Application-backend/issues"
+  },
+  "homepage": "https://github.com/NutNaphop/Dun-Diary-Application-backend#readme",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "express-rate-limit": "^8.2.1",
+    "morgan": "^1.10.1",
+    "openai": "^6.17.0",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "@types/morgan": "^1.9.10",
+    "@types/node": "^22.19.7",
+    "eslint": "^9.39.2",
+    "globals": "^17.2.0",
+    "nodemon": "^3.1.11",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  }
+}
