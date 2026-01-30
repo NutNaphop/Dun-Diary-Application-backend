@@ -15,7 +15,7 @@ export const CONSTANTS: AppConstantsType = {
     APP_NAME: 'Dun Diary',
     API_VERSION: 'v1',
     AI_MODEL: 'typhoon-v2.5-30b-a3b-instruct',
-    MAX_TOKEN: 512,
+    MAX_TOKEN: 700,
     TEMPERATURE: 0.7,
     ERRORS: {
         MISSING_INPUT: 'กรุณากรอกข้อมูลความดันให้ครบถ้วน (Systolic, Diastolic, Pulse)',

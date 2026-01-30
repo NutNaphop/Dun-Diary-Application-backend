@@ -11,10 +11,25 @@ export const PROMPTS = {
     - อัตราการเต้นของหัวใจ (Pulse): ${pulse} ครั้ง/นาที
 
     คำสั่ง:
-    1. ประเมินระดับความรุนแรง (เช่น ปกติ, สูงเล็กน้อย, สูงอันตราย) ตามเกณฑ์มาตรฐาน
-    2. ขอคำแนะนำในการปฏิบัติตัว 1-2 ข้อสั้นๆ เข้าใจง่าย เป็นกันเอง
-    3. ตอบเป็นภาษาไทย
+    1. สรุปผลมาแบบเข้าใจง่ายๆ สั้นๆเข้าใจง่าย
+    2. ประเมินระดับความรุนแรง (เช่น ต่ำ, ปกติ, เริ่มสูง, สูง, สูงมาก) ตามเกณฑ์มาตรฐาน WHO
+    3. ขอคำแนะนำในการปฏิบัติตัว 1-2 ข้อสั้นๆ เข้าใจง่าย เป็นกันเอง
+    4. เกณฑ์อ้างอิงโดยเป็นชื่อองค์กร
+    4. ตอบเป็นภาษาไทยในรูปแบบ JSON
+
+    วิเคราะห์ผลและตอบเป็น JSON เท่านั้น ตามโครงสร้างนี้:
+    {
+        "summary": "",
+        "level": "",
+        "suggest": [],
+        "reference" ""
+    }
     `,
 
-    SYSTEM_INSTRUCTION: `You are a helpful and empathetic medical assistant.`
+    SYSTEM_INSTRUCTION: `
+    You are a helpful and empathetic medical assistant. 
+    RULES:
+        1. Analyze input and respond in THAI language only.
+        2. Output MUST be a raw JSON object.
+        3. NO markdown (no \`\`\`json), NO conversational filler.`
 };

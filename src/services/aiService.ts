@@ -16,7 +16,6 @@ export async function analyzeBloodPressure(
 ): Promise<any> {
     const testPromt: string = PROMPTS.BLOOD_PRESSURE_PROMPT(sys, dia, pulse);
     try {
-
         const response = await client.chat.completions.create({
             model: CONSTANTS.AI_MODEL,
             messages: [
@@ -25,12 +24,20 @@ export async function analyzeBloodPressure(
             ],
             max_completion_tokens: CONSTANTS.MAX_TOKEN,
             temperature: CONSTANTS.TEMPERATURE,
+            response_format: { type: "json_object" }
         });
 
-        const content = response.choices[0].message.content || "{}";
+        let content = response.choices[0].message.content || "{}";
+
+        // Extract JSON if the AI wraps it in markdown code blocks or other text
+        const jsonMatch = content.match(/\{[\s\S]*\}/);
+        if (jsonMatch) {
+            content = jsonMatch[0];
+        }
+
         return JSON.parse(content);
     } catch (error: any) {
-        console.error("❌ Error while using AI:", error.message);
+        console.error("❌ Error while using AI:", error);
         throw new Error(CONSTANTS.ERRORS.AI_SERVICE_DOWN);
     }
 }
