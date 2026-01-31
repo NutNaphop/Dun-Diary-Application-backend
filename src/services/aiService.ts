@@ -2,6 +2,7 @@ import OpenAI from 'openai';
 import 'dotenv/config';
 import { CONSTANTS } from '../config/constants';
 import { PROMPTS } from '../config/prompts';
+import { logger } from '../utils/logger';
 
 
 const client = new OpenAI({
@@ -37,7 +38,7 @@ export async function analyzeBloodPressure(
 
         return JSON.parse(content);
     } catch (error: any) {
-        console.error("❌ Error while using AI:", error);
+        logger.error("❌ Error while using AI:", error);
         throw new Error(CONSTANTS.ERRORS.AI_SERVICE_DOWN);
     }
 }
