@@ -3,6 +3,7 @@ import 'dotenv/config';
 import { CONSTANTS } from '../config/constants';
 import { PROMPTS } from '../config/prompts';
 import { logger } from '../utils/logger';
+import { PressureRecord } from '../models/pressureModel';
 
 
 const client = new OpenAI({
@@ -11,11 +12,9 @@ const client = new OpenAI({
 });
 
 export async function analyzeBloodPressure(
-    sys: number,
-    dia: number,
-    pulse: number
+    records: PressureRecord[]
 ): Promise<any> {
-    const testPromt: string = PROMPTS.BLOOD_PRESSURE_PROMPT(sys, dia, pulse);
+    const testPromt: string = PROMPTS.BLOOD_PRESSURE_PROMPT(records);
     try {
         const response = await client.chat.completions.create({
             model: CONSTANTS.AI_MODEL,
@@ -35,7 +34,6 @@ export async function analyzeBloodPressure(
         if (jsonMatch) {
             content = jsonMatch[0];
         }
-
         return JSON.parse(content);
     } catch (error: any) {
         logger.error("❌ Error while using AI:", error);

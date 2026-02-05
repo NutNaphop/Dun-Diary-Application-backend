@@ -1,12 +1,13 @@
 import { Request, Response, NextFunction } from 'express';
 import * as aiService from '../services/aiService';
-import { PressureInput } from '../models/pressureModel';
+import { pressureSchema } from '../models/pressureModel';
+import { z } from 'zod';
 
-export const analyzePressure = async (req: Request<{}, {}, PressureInput>, res: Response, next: NextFunction) => {
+export const analyzePressure = async (req: Request<{}, {}, z.infer<typeof pressureSchema>>, res: Response, next: NextFunction) => {
     try {
-        const { systolic, diastolic, pulse } = req.body;
+        const { records } = req.body;
 
-        const analysisResult = await aiService.analyzeBloodPressure(systolic, diastolic, pulse);
+        const analysisResult = await aiService.analyzeBloodPressure(records);
 
         res.status(200).json({
             success: true,
