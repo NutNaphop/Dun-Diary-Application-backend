@@ -1,13 +1,17 @@
 // src/config/prompts.ts
-import { PressureRecord } from '../models/pressureModel';
+import { PressureData } from '../models/pressureModel';
 
 export const PROMPTS = {
 
-    BLOOD_PRESSURE_PROMPT: (records: PressureRecord[]): string => `
-    คุณเป็นผู้เชี่ยวชาญด้านสุขภาพ หน้าที่คือวิเคราะห์ค่าความดันโลหิตของผู้ใช้งานจากรายการข้อมูลที่ได้รับ
+    BLOOD_PRESSURE_PROMPT: (data: PressureData): string => `
+    คุณเป็นผู้เชี่ยวชาญด้านสุขภาพ หน้าที่คือวิเคราะห์ค่าความดันโลหิตของผู้ใช้งานจากข้อมูลสรุปที่ได้รับ
     
-    ข้อมูลบันทึกความดัน:
-   ${JSON.stringify(records)}
+    ข้อมูลสรุป${data.periodType === 'week' ? 'รายสัปดาห์' : data.periodType === 'month' ? 'รายเดือน' : 'รายปี'}:
+    - ช่วงเวลา: ${data.rangeLabel}
+    - จำนวนการบันทึกทั้งหมด: ${data.totalRecords} ครั้ง
+    
+    ข้อมูลค่าเฉลี่ย${data.periodType === 'week' ? 'รายวัน' : data.periodType === 'month' ? 'รายสัปดาห์' : 'รายเดือน'}:
+    ${JSON.stringify(data.items, null, 2)}
 
     คำสั่ง:
     1. สรุปภาพรวมและแนวโน้มของความดันโลหิตจากข้อมูลทั้งหมดโดยตอบออกมาให้กระชับ เหมาะกับบุคคลทั่วไป ไม่ทำให้ตกใจ
@@ -18,7 +22,7 @@ export const PROMPTS = {
        - 3 High BP (Stage 1): 130-139/80-89
        - 4 High BP (Stage 2): >= 140/90
        - 5 High BP (Stage 3): >= 180/120
-    3. เลือกค่า "risk_level" ที่แย่ที่สุดที่พบในช่วงนี้ เพื่อแจ้งเตือน
+    3. เลือกค่า "risk_level" ที่แย่ที่สุดที่พบในช่วงนี้ เพื่อแจ้งเตือน (ดูจาก level ใน items)
     4. ขอคำแนะนำ 1-2 ข้อ (สั้น, กระชับ, ภาษาพูดที่สุภาพ)
 
     วิเคราะห์ผลและตอบเป็น JSON เท่านั้น ตามโครงสร้างนี้:

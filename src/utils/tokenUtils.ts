@@ -1,4 +1,6 @@
+// src/utils/tokenUtils.ts
 import { CONSTANTS } from '../config/constants';
+import { logger } from './logger';
 
 /**
  * ประมาณจำนวน tokens จาก text (ภาษาไทย ~3 chars per token)
@@ -8,18 +10,25 @@ export function estimateTokens(text: string): number {
 }
 
 /**
- * คำนวณ max_completion_tokens ที่ปลอดภัย
- * @returns จำนวน tokens สำหรับ output หรือ throw error ถ้า input ยาวเกินไป
+ * คำนวณ max_completion_tokens สำหรับ Typhoon API
+ * Note: Typhoon ใช้ max_completion_tokens = input + output รวมกัน
+ * @returns จำนวน tokens (input + output) หรือ throw error ถ้าเกิน limit
  */
 export function calculateMaxCompletionTokens(inputText: string): number {
     const inputTokens = estimateTokens(inputText);
-    const availableForOutput = CONSTANTS.MODEL_MAX_TOKENS - inputTokens;
+    const desiredOutputTokens = CONSTANTS.MIN_OUTPUT_TOKENS;
+    const totalRequired = inputTokens + desiredOutputTokens;
 
-    // ถ้า input ยาวเกินจนเหลือ output ไม่พอ
-    if (availableForOutput < CONSTANTS.MIN_OUTPUT_TOKENS) {
+    logger.info(`📊 Token estimation: input ~${inputTokens}, desired output: ${desiredOutputTokens}, total: ${totalRequired}`);
+
+    if (totalRequired > CONSTANTS.MODEL_MAX_TOKENS) {
+        logger.warn(`⚠️ Token limit exceeded! Required ${totalRequired}, max ${CONSTANTS.MODEL_MAX_TOKENS}`);
         throw new Error(CONSTANTS.ERRORS.INPUT_TOO_LONG);
     }
 
-    // คืนค่าที่เหลือ แต่ไม่เกิน MAX_TOKEN ที่กำหนด
-    return Math.min(availableForOutput, CONSTANTS.MAX_TOKEN);
+    const maxTokens = Math.min(inputTokens + CONSTANTS.MAX_TOKEN, CONSTANTS.MODEL_MAX_TOKENS);
+
+    logger.info(`🎯 Using max_completion_tokens: ${maxTokens} (input: ${inputTokens} + buffer: ${maxTokens - inputTokens})`);
+
+    return maxTokens;
 }

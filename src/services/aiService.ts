@@ -4,7 +4,7 @@ import { CONSTANTS } from '../config/constants';
 import { PROMPTS } from '../config/prompts';
 import { logger } from '../utils/logger';
 import { calculateMaxCompletionTokens } from '../utils/tokenUtils';
-import { PressureRecord } from '../models/pressureModel';
+import { PressureData } from '../models/pressureModel';
 
 
 const client = new OpenAI({
@@ -13,9 +13,9 @@ const client = new OpenAI({
 });
 
 export async function analyzeBloodPressure(
-    records: PressureRecord[]
+    data: PressureData
 ): Promise<any> {
-    const userPrompt: string = PROMPTS.BLOOD_PRESSURE_PROMPT(records);
+    const userPrompt: string = PROMPTS.BLOOD_PRESSURE_PROMPT(data);
     const fullInputText = PROMPTS.SYSTEM_INSTRUCTION + userPrompt;
 
     try {

@@ -19,9 +19,9 @@ export const CONSTANTS: AppConstantsType = {
     APP_NAME: 'Dun Diary',
     API_VERSION: 'v1',
     AI_MODEL: 'typhoon-v2.5-30b-a3b-instruct',
-    MAX_TOKEN: 1500,
-    MODEL_MAX_TOKENS: 4096,        // ปรับตาม model ที่ใช้
-    MIN_OUTPUT_TOKENS: 800,        // output ขั้นต่ำที่ต้องการสำหรับ response
+    MAX_TOKEN: 800,                // output ที่ต้องการ (ประหยัดเงิน)
+    MODEL_MAX_TOKENS: 8192,        // Typhoon limit จริง
+    MIN_OUTPUT_TOKENS: 500,        // output ขั้นต่ำที่ต้องการสำหรับ response
     CHARS_PER_TOKEN: 3,            // ภาษาไทย ~3 chars per token
     TEMPERATURE: 0.7,
     ERRORS: {
