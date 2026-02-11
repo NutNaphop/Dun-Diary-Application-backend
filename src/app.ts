@@ -25,8 +25,8 @@ app.use('/api/', apiLimiter);
 
 // Routes
 app.use('/api/', healthRoutes);
-// app.use('/api/pressure', verifyFirebaseToken, pressureRoutes);
-app.use('/api/pressure', pressureRoutes);
+app.use('/api/pressure', verifyFirebaseToken, pressureRoutes);
+// app.use('/api/pressure', pressureRoutes);
 
 // Error Handling
 app.use(notFound);
