@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import admin from 'firebase-admin';
 
-const serviceAccount = require('../config/key/serviceAccountKey.json');
+const serviceAccount = require('../config/serviceAccountKey.json');
 
 if (!admin.apps.length) {
     admin.initializeApp({
@@ -11,7 +11,6 @@ if (!admin.apps.length) {
 
 export const verifyFirebaseToken = async (req: Request, res: Response, next: NextFunction) => {
     const authHeader = req.headers.authorization;
-
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
         return res.status(401).json({ success: false, message: 'กรุณาเข้าสู่ระบบ (No Token Provided)' });
     }

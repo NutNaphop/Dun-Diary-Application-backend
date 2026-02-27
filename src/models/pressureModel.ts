@@ -21,6 +21,7 @@ export const pressureSchema = z.object({
     rangeLabel: z.string(),
     totalRecords: z.number().min(1, "กรุณาส่งข้อมูลอย่างน้อย 1 รายการ"),
     items: z.array(pressureItemSchema).min(1, "กรุณาส่งข้อมูลอย่างน้อย 1 รายการ"),
+    sd: z.number(),
 });
 
 export type PressureItem = z.infer<typeof pressureItemSchema>;
