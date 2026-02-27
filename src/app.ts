@@ -28,6 +28,13 @@ app.use('/api/', healthRoutes);
 app.use('/api/pressure', verifyFirebaseToken, pressureRoutes);
 // app.use('/api/pressure', pressureRoutes);
 
+app.get('/', (req, res) => {
+    res.status(200).send('Dun Diary Backend is running');
+});
+app.get('/api', (req, res) => {
+    res.status(200).send('Dun Diary API Server');
+});
+
 // Error Handling
 app.use(notFound);
 app.use(errorHandler);
